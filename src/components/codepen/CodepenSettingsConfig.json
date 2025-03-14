@@ -1,0 +1,44 @@
+{
+    "__READ_ME__": "Fill in the below options to suite your own needs. defaultOptions property descriptions can be found at https://blog.codepen.io/documentation/prefill/",
+
+    "global": {
+        "titlePrepend": "My Project",
+        "titlePrependSeperator": " - ",
+        "resultsIframeBodyDefaultPadding": "10px",
+        "removeCommentsFromHtml": false
+    },
+
+    "POST": {
+        "actionUrl": "https://codepen.io/pen/define",
+        "target": "_blank",
+        "inputName": "data"
+    },
+
+    "options": {
+        "title": "",
+        "description": "",
+        "private": false,
+        "parent": null,
+        "tags": [],
+        "editors": "111",
+        "layout": "left",
+        "html": "",
+        "html_pre_processor": "none",
+        "css": "",
+        "css_pre_processor": "none",
+        "css_starter": "normalize",
+        "css_prefix": "neither",
+        "js": "",
+        "js_pre_processor": "none",
+        "html_classes": "",
+        "head": "",
+        "css_external": "",
+        "js_external": ""
+    },
+
+    "addonParameterNames": {
+        "global": "global",
+        "post": "post",
+        "options": "options"
+    }
+}
