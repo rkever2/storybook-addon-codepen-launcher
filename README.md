@@ -70,7 +70,7 @@ export default preview;
 
 ### Story Settings
 
-Although not neccessary, you can modify any of the codenpenLauncher settings at a story level.
+Although not neccessary, you can modify any of the codepenLauncher settings at a story level.
 
 ```javascript
 import React from "react";
