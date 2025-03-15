@@ -4,6 +4,10 @@ This package is still in the alpha phase. Please submit any issues [HERE](https:
 
 This Storybook addon allows you to launch CodePen examples directly from your Storybook stories. Follow the steps below to integrate and use this addon in your project.
 
+![Storybook Addon CodePen Launcher](assets/storybook.png)
+
+![CodePen Launched](assets/codepen.png)
+
 ## Installation
 
 First, install the addon via npm:
