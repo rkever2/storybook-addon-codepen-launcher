@@ -70,6 +70,8 @@ export default preview;
 
 ### Story Settings
 
+Although not neccessary, you can modify any of the codenpenLauncher settings at a story level.
+
 ```javascript
 import React from "react";
 import { MyComponent } from "./MyComponent";
