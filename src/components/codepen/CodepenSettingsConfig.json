@@ -8,7 +8,7 @@
         "removeCommentsFromHtml": false
     },
 
-    "POST": {
+    "post": {
         "actionUrl": "https://codepen.io/pen/define",
         "target": "_blank",
         "inputName": "data"

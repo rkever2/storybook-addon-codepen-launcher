@@ -12,9 +12,9 @@ export class CodepenPostModel {
     private _inputName: string;
 
     constructor(data: Partial<CodepenPostModelInterface>) {
-        this._actionUrl = data.actionUrl ?? codepenSettingsConfig.POST.actionUrl;
-        this._target = data.target ?? codepenSettingsConfig.POST.target;
-        this._inputName = data.inputName ?? codepenSettingsConfig.POST.inputName;
+        this._actionUrl = data.actionUrl ?? codepenSettingsConfig.post.actionUrl;
+        this._target = data.target ?? codepenSettingsConfig.post.target;
+        this._inputName = data.inputName ?? codepenSettingsConfig.post.inputName;
     }
 
     get actionUrl(): string {
