@@ -43,7 +43,7 @@ Below is a basic example using the most basic settings.
 
 ### Global Settings
 
-Set global settings in your `src/preview.js` file. Any settings, whether set here or not, can be overwritten at the story level (see Story Settings below);
+Set your settings globally in your `src/preview.js` file. Any settings, whether set here or not, can be overwritten at the story level (see Story Settings below);
 
 ```javascript
 // src/preview.js
@@ -89,15 +89,17 @@ Default.args = {
     args: {
         // component args...
     },
-    codepenLauncher: {
-        globals: {
-            // global settings...
-        },
-        post: {
-            // post settings...
-        },
-        options: {
-            // codepen options...
+    parameters: {
+        codepenLauncher: {
+            globals: {
+                // global settings...
+            },
+            post: {
+                // post settings...
+            },
+            options: {
+                // codepen options...
+            },
         },
     },
 };
