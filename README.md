@@ -1,6 +1,6 @@
 # Storybook Addon CodePen Launcher
 
-This package is still in the alpha phase. Please submit any issues [HERE](https://github.com/robertkever/storybook-addon-codepen-launcher/issues).
+This package is still in the alpha phase. Please submit any issues [HERE](https://github.com/rkever2/storybook-addon-codepen-launcher/issues).
 
 This Storybook addon allows you to launch CodePen examples directly from your Storybook stories. Follow the steps below to integrate and use this addon in your project.
 
@@ -130,7 +130,7 @@ Default.args = {
         private: false, // true || false - When the Pen is saved, it will save as Private if logged in user has that privledge, otherwise it will save as public
         parent: null, // // If supplied, the Pen will save as a fork of this id. Note it's not the slug, but ID. ou can find the ID of a Pen with `window.CP.pen.id` in the browser console.
         tags: [], // // an array of strings
-        editors: "111", // Set which editors are open. In this example HTML open, CSS closed, JS open
+        editors: "111", // Set which editors are open. In this example HTML open, CSS open, JS open
         layout: "left", // top | left | right
         html: "", // codepen HTML
         html_pre_processor: "none", // "none" || "slim" || "haml" || "markdown"
