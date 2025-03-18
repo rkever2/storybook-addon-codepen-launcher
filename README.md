@@ -1,6 +1,6 @@
 # Storybook Addon CodePen Launcher
 
-This package is still in the alpha phase. Please submit any issues [HERE](https://github.com/rkever2/storybook-addon-codepen-launcher/issues).
+This package is still in beta. Please submit any issues [HERE](https://github.com/rkever2/storybook-addon-codepen-launcher/issues).
 
 This Storybook addon allows you to launch CodePen examples directly from your Storybook stories. Follow the steps below to integrate and use this addon in your project.
 
@@ -50,7 +50,7 @@ Set your settings globally in your `src/preview.js` file. Any settings, whether 
 const preview: Preview = {
   parameters: {
     codepenLauncher: {
-      global: {
+      settings: {
         titlePrepend: "My Project Name",
         resultsIframeBodyDefaultPadding: "10px",
         removeCommentsFromHtml: true,
@@ -91,11 +91,11 @@ Default.args = {
     },
     parameters: {
         codepenLauncher: {
-            globals: {
-                // global settings...
+            settings: {
+                // basic addon settings...
             },
             post: {
-                // post settings...
+                // codepen post settings...
             },
             options: {
                 // codepen options...
@@ -111,11 +111,12 @@ Default.args = {
 
 ```javascript
   codepenLauncher: {
-    global: { // global settings
+    settings: { // basic addon settings
         titlePrepend: "My Project", // Your project name
         titlePrependSeperator: " - ", // The seperator for new codepen name (prepends the story name)
         resultsIframeBodyDefaultPadding: "10px", // add padding to codepen (if not, it will hug the edge unless you've added CSS for that)
-        removeCommentsFromHtml: false // remove comments from HTML (e.g. lit or angular auto generated)
+        removeCommentsFromHtml: false // remove comments from HTML (usefull for lit or angular auto generated)
+        removeCommentsFromCss: false // remove comments from CSS
     },
 
     post: { // codepen post prefill settings (see https://blog.codepen.io/documentation/prefill/)

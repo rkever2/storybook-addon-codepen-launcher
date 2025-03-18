@@ -1,10 +1,12 @@
 import type { StoryContext, Renderer } from "storybook/internal/types";
 import { format as prettierFormat } from "prettier/standalone";
 import * as prettierHtml from "prettier/plugins/html";
+import * as prettierCss from "prettier/plugins/postcss";
+import * as prettierJs from "prettier/plugins/babel";
 import { Options as PrettierOptions } from "prettier";
-import { CodepenGlobalsModel, CodepenGlobalsModelInterface } from "./Models/CodepenGlobalsModel";
-import { CodepenOptionsModel, CodepenOptionsModelInterface } from "./Models/CodepenOptionsModel";
 import { CodepenSettingsModel, CodepenSettingsModelInterface } from "./Models/CodepenSettingsModel";
+import { CodepenOptionsModel, CodepenOptionsModelInterface } from "./Models/CodepenOptionsModel";
+import { CodepenConfigModel, CodepenConfigModelInterface } from "./Models/CodepenConfigModel";
 import { CodepenPostModel, CodepenPostModelInterface } from "./Models/CodepenPostModel";
 
 /**
@@ -12,16 +14,16 @@ import { CodepenPostModel, CodepenPostModelInterface } from "./Models/CodepenPos
  * @param context - StoryContext<Renderer>
  * @returns settings ob
  */
-function getCurrentCopenSettings(context: StoryContext<Renderer>): CodepenSettingsModelInterface {
+function getCurrentCodepenConfig(context: StoryContext<Renderer>): CodepenConfigModelInterface {
     const userCodepenParams: any = context.parameters["codepenLauncher"] || {};
 
-    const userGlobalParams: any = (userCodepenParams.global as CodepenGlobalsModelInterface) || {};
+    const userSettingsParams: any = (userCodepenParams.config as CodepenSettingsModelInterface) || {};
     const userPostParams: any = (userCodepenParams.post as CodepenPostModelInterface) || {};
     const userOptionsParams: any = (userCodepenParams.options as CodepenOptionsModelInterface) || {};
 
-    const codepenSettings: CodepenSettingsModelInterface = new CodepenSettingsModel(new CodepenGlobalsModel(userGlobalParams), new CodepenPostModel(userPostParams), new CodepenOptionsModel(userOptionsParams));
+    const codepenConfig: CodepenConfigModelInterface = new CodepenConfigModel(new CodepenSettingsModel(userSettingsParams), new CodepenPostModel(userPostParams), new CodepenOptionsModel(userOptionsParams));
 
-    return codepenSettings;
+    return codepenConfig;
 }
 
 /**
@@ -30,7 +32,7 @@ function getCurrentCopenSettings(context: StoryContext<Renderer>): CodepenSettin
  * @param codepenOptions - CodepenOptionsModelInterface
  * @returns void
  */
-async function sendPostData(settings: CodepenSettingsModelInterface): Promise<void> {
+async function sendPostData(settings: CodepenConfigModelInterface): Promise<void> {
     // build form
     const form = document.createElement("form");
     form.style.display = "none";
@@ -55,9 +57,11 @@ async function sendPostData(settings: CodepenSettingsModelInterface): Promise<vo
     return Promise.resolve();
 }
 
+// TODO: Looking into DRY for the below three functions
 /**
  *
  * @param {string} htmlString - The HTML string to format
+ * @param {boolean} removeComments - Whether to remove comments or not
  * @returns {string} - The formatted HTML string
  */
 async function formatHtml(htmlString: string, removeComments: boolean): Promise<string> {
@@ -86,14 +90,69 @@ async function formatHtml(htmlString: string, removeComments: boolean): Promise<
 
 /**
  *
- * @param codepenSettings - CodepenSettingsModelInterface
+ * @param {string} cssString - The CSS string to format
+ * @param {boolean} removeComments - Whether to remove comments or not
+ * @returns {string} - The formatted CSS string
+ */
+async function formatCss(cssString: string, removeComments: boolean): Promise<string> {
+    let formattedCode: string = "No CSS to render"; // Default message
+
+    const prettierConfig: PrettierOptions = {
+        parser: "css",
+        plugins: [prettierCss],
+    };
+
+    // Remove comments
+    if (removeComments) {
+        cssString = cssString.replace(/\/\*[\s\S]*?\*\//g, "");
+    }
+
+    const formatCode = async () => {
+        formattedCode = await prettierFormat(cssString, prettierConfig);
+    };
+
+    await formatCode().catch((e) => console.error(e));
+
+    return Promise.resolve(formattedCode);
+}
+
+/**
+ *
+ * @param {string} jsString - The JS string to format
+ * @param {boolean} removeComments - Whether to remove comments or not
+ * @returns {string} - The formatted JS string
+ */
+async function formatJs(jsString: string, removeComments: boolean): Promise<string> {
+    let formattedCode: string = "No JS to render"; // Default message
+
+    const prettierConfig: PrettierOptions = {
+        parser: "babel",
+    };
+
+    // Remove comments
+    if (removeComments) {
+        jsString = jsString.replace(/\/\*[\s\S]*?\*\//g, "");
+    }
+
+    const formatCode = async () => {
+        formattedCode = await prettierFormat(jsString, prettierConfig);
+    };
+
+    await formatCode().catch((e) => console.error(e));
+
+    return Promise.resolve(formattedCode);
+}
+
+/**
+ *
+ * @param codepenConfig - CodepenConfigModelInterface
  * @returns {string} - The styles from the head
  */
-function buildStyles(codepenSettings: CodepenSettingsModelInterface): string {
-    let styles: string = codepenSettings.global.resultsIframeBodyDefaultPadding ? `body { padding: ${codepenSettings.global.resultsIframeBodyDefaultPadding}; /* codepenLauncher */ }\n` : "";
+function buildStyles(codepenConfig: CodepenConfigModelInterface): string {
+    let styles: string = codepenConfig.settings.resultsIframeBodyDefaultPadding ? `body { padding: ${codepenConfig.settings.resultsIframeBodyDefaultPadding}; /* codepenLauncher */ }\n` : "";
 
-    if (codepenSettings.options.css) {
-        styles += codepenSettings.options.css;
+    if (codepenConfig.options.css) {
+        styles += codepenConfig.options.css;
 
         return styles;
     }
@@ -118,15 +177,24 @@ function buildStyles(codepenSettings: CodepenSettingsModelInterface): string {
  */
 export const codepenEffect = async (isActivated: boolean, context: StoryContext<Renderer>, updateGlobals: any, key: string) => {
     if (!isActivated) return;
-    const codepenSettings = getCurrentCopenSettings(context);
-    const html = codepenSettings.options.html && codepenSettings.options.html !== "" ? codepenSettings.options.html : (context.canvasElement as HTMLElement).innerHTML;
-    const htmlFormatted = await formatHtml(html, codepenSettings.global.removeCommentsFromHtml);
+    const codepenConfig = getCurrentCodepenConfig(context);
 
-    codepenSettings.options.html = htmlFormatted;
-    codepenSettings.options.css = buildStyles(codepenSettings);
-    codepenSettings.options.title = codepenSettings.options.title ?? `${codepenSettings.global.titlePrepend}${codepenSettings.global.titlePrependSeperator}${context.title}`;
+    // HTML
+    const html = codepenConfig.options.html && codepenConfig.options.html !== "" ? codepenConfig.options.html : (context.canvasElement as HTMLElement).innerHTML;
+    const htmlFormatted = codepenConfig.settings.formatHtml ? await formatHtml(html, codepenConfig.settings.removeCommentsFromHtml) : html;
+    codepenConfig.options.html = htmlFormatted;
 
-    await sendPostData(codepenSettings);
+    // CSS
+    const css = buildStyles(codepenConfig);
+    codepenConfig.options.css = codepenConfig.settings.formatCss ? await formatCss(css, codepenConfig.settings.removeCommentsFromCss) : css;
+
+    // JS
+    const js = codepenConfig.options.js;
+    codepenConfig.options.js = codepenConfig.settings.formatJs ? await formatCss(js, false) : js;
+
+    codepenConfig.options.title = codepenConfig.options.title ?? `${codepenConfig.settings.titlePrepend}${codepenConfig.settings.titlePrependSeperator}${context.title}`;
+
+    await sendPostData(codepenConfig);
 
     updateGlobals({
         [key]: false,

@@ -1,11 +1,16 @@
 {
     "__READ_ME__": "Fill in the below options to suite your own needs. defaultOptions property descriptions can be found at https://blog.codepen.io/documentation/prefill/",
 
-    "global": {
+    "settings": {
         "titlePrepend": "My Project",
         "titlePrependSeperator": " - ",
         "resultsIframeBodyDefaultPadding": "10px",
-        "removeCommentsFromHtml": false
+        "removeCommentsFromHtml": false,
+        "removeCommentsFromCss": false,
+        "removeCommentsFromJs": false,
+        "formatHtml": true,
+        "formatCss": true,
+        "formatJs": true
     },
 
     "post": {

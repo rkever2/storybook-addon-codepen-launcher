@@ -1,5 +1,5 @@
 /* See https!://blog.codepen.io/documentation/prefill/ for CodePen option object details for POST Prefill */
-import * as types from "./CodepenSettingsTypes";
+import * as types from "./CodepenConfigTypes";
 import codepenSettingsConfig from "../CodepenSettingsConfig.json";
 
 export interface CodepenOptionsModelInterface {

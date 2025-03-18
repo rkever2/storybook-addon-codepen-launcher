@@ -1,9 +1,9 @@
 {
     "name": "@rkever2/storybook-addon-codepen-launcher",
-    "version": "1.0.0-beta.5",
+    "version": "1.0.0-beta.7",
     "description": "Using CodePen's \"POST to Prefill\" feature, a button is created in the toolbar that allows you to launch your demo code into a codepen editor, complete with JS and CSS ",
     "keywords": [
-        "storybook-addon",
+        "storybook-addons",
         "codepen",
         "codepen-launcher",
         "storybook-addon-codepen-launcher"
