@@ -114,6 +114,7 @@
             "preact",
             "react-native"
         ],
+        "unsupportedFrameworks": [],
         "icon": "https://avatars.githubusercontent.com/u/168228240"
     },
     "auto-changelog": {
