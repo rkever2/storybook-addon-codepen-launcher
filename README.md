@@ -117,9 +117,13 @@ Default.args = {
         resultsIframeBodyDefaultPadding: "10px", // add padding to codepen (if not, it will hug the edge unless you've added CSS for that)
         removeCommentsFromHtml: false // remove comments from HTML (usefull for lit or angular auto generated)
         removeCommentsFromCss: false // remove comments from CSS
+        removeCommentsFromJs: false, // remove comments from JS
+        formatHtml: true, // format the HTML
+        formatCss: true, // format the CSS
+        formatJs: true // format the JS
     },
 
-    post: { // codepen post prefill settings (see https://blog.codepen.io/documentation/prefill/)
+    post: { // codepen post prefill settings (see https://blog.codepen.io/documentation/prefill/) - NOTE that you shouldn't need to change these unless codepen changes them (before I can update) or offers alternative links you want to use.
         actionUrl: "https://codepen.io/pen/define", // url defined by codepen
         target: "_blank", // How to open the new codepen window
         inputName: "data" // input name defined by codepen
@@ -129,8 +133,8 @@ Default.args = {
         title: "", // codepen title (if empty will just use story name)
         description: "", // description
         private: false, // true || false - When the Pen is saved, it will save as Private if logged in user has that privledge, otherwise it will save as public
-        parent: null, // // If supplied, the Pen will save as a fork of this id. Note it's not the slug, but ID. ou can find the ID of a Pen with `window.CP.pen.id` in the browser console.
-        tags: [], // // an array of strings
+        parent: null, // If supplied, the Pen will save as a fork of this id. Note it's not the slug, but ID. ou can find the ID of a Pen with `window.CP.pen.id` in the browser console.
+        tags: [], // an array of strings
         editors: "111", // Set which editors are open. In this example HTML open, CSS open, JS open
         layout: "left", // top | left | right
         html: "", // codepen HTML
@@ -159,4 +163,8 @@ The HTML that's sent over to codepen will be taken from the storybook story cont
 
 ### Setting: options.css
 
-The CSS, if not defined, will just scrape the CSS in the story's rendered iframe. You can override that by setting a value to options.css. You can also add external css file (such as a global lib file) by setting options.css_external.
+The CSS, if not defined, will just scrape the CSS in the story's rendered iframe. You can override that by setting a value to options.css. You can also add external css file (preview.ts/jsx) by setting options.css_external.
+
+### Settings: options.js
+
+There is no magic that pulls in JS from the story (at least at this point) and if you want it, you need to add it into the option at the story or global level (preview.ts/jsx). For library level JS files, you should use options.external_js but make sure they are publically available for codepen to use.
