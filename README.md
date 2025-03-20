@@ -123,7 +123,7 @@ Default.args = {
         formatJs: true // format the JS
     },
 
-    post: { // codepen post prefill settings (see https://blog.codepen.io/documentation/prefill/) - NOTE that you shouldn't need to change these unless codepen changes them (before I can update) or offers alternative links you want to use.
+    post: { // codepen post prefill settings (see https://blog.codepen.io/documentation/prefill/) - NOTE that you shouldn't need to change these unless codepen changes them (before I can update) or offers alternative links you want to use
         actionUrl: "https://codepen.io/pen/define", // url defined by codepen
         target: "_blank", // How to open the new codepen window
         inputName: "data" // input name defined by codepen
