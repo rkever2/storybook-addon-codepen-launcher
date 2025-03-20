@@ -115,8 +115,8 @@ Default.args = {
         titlePrepend: "My Project", // Your project name
         titlePrependSeperator: " - ", // The seperator for new codepen name (prepends the story name)
         resultsIframeBodyDefaultPadding: "10px", // add padding to codepen (if not, it will hug the edge unless you've added CSS for that)
-        removeCommentsFromHtml: false // remove comments from HTML (usefull for lit or angular auto generated)
-        removeCommentsFromCss: false // remove comments from CSS
+        removeCommentsFromHtml: false, // remove comments from HTML (usefull for lit or angular auto generated)
+        removeCommentsFromCss: false, // remove comments from CSS
         removeCommentsFromJs: false, // remove comments from JS
         formatHtml: true, // format the HTML
         formatCss: true, // format the CSS
